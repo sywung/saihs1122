@@ -54,7 +54,7 @@ void testdrawstyles(void) {
     u8g2.printf("%s", "SAIHS"); // 要顯示的字串
     // 如果不支援 printf，請改用下列方法
     // char buf[10]; 
-    // sprintf(buf,"%02d:%02d",1,3);
+    // sprintf(buf,"%s","SAIHS");
     // u8g2.print(buf);
   } while (u8g2.nextPage());
   delay(1000);
