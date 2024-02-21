@@ -20,7 +20,9 @@ OLED因控制的訊號較多，且內部處理較為複雜，因此在控制OLED
 
 
 
-![https://i.imgur.com/zchONpC.png](assets/clip_image006.png)
+![https://www.digikey.be/maker-media/98f1d94e-d1a0-403f-9afd-baecd0e8afb2](assets/98f1d94e-d1a0-403f-9afd-baecd0e8afb2.jpeg)
+
+
 
 在電路板接腳方面，因我們是使用I2C通訊的0.96吋(**128x64**) OLED以及Arduino Mega 2560開發板，故在接線的時候需要配合開發板上I2C特定接腳進行連線(**20 (SDA)**, **21 (SCL)**)。電源部分則是採用**3.3V**供電。
 
