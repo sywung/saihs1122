@@ -1,6 +1,6 @@
 ## 臺北市立松山工農112學年度第二學期電子科-感測器實習學習單 
 
-<center><font size=6>【SSD1306 OLED 0.96吋顯示螢幕】</font></center>
+<center><font size=6>【SSD1306 0.96吋/SH1106 1.3吋 OLED顯示螢幕】</font></center>
 
 <div style="text-align: right">班級：______________ 座號：________姓名：________________</div>
 
@@ -36,7 +36,7 @@ U8g2
 
 #### 四、程式說明
 
-```c
+```c {.line-numbers}
 #include <Wire.h>
 #include <U8g2lib.h>
 

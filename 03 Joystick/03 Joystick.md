@@ -37,7 +37,7 @@
 #### 三、程式說明
 
 
-``` c
+``` c {.line-numbers}
 // Arduino pin numbers
 const int SW_pin = 8; // digital pin connected to switch output
 const int X_pin = 0; // analog pin connected to X output
