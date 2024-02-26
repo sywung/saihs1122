@@ -79,6 +79,12 @@ void clear()
 
 清除緩衝區"Buffer"內的所有圖元點，游標回到左上角原點。
 
+(七) 參考資料
+
+其他指令請參考 [https://github.com/olikraus/u8g2/wiki/u8g2reference#drawcircle](https://github.com/olikraus/u8g2/wiki/u8g2reference#drawcircle)
+
+
+
 #### 三、Bitmap資料轉換
 
 首先可於電腦內小畫家中開啟一空白畫布，接著設定其長寬為OLED的大小，例如(128*64)後即可開始作畫。在 小畫家/檔案/內容 做設定即可。
