@@ -81,7 +81,7 @@ void clear()
 
 (七) 參考資料
 
-其他指令請參考 [https://github.com/olikraus/u8g2/wiki/u8g2reference#drawcircle](https://github.com/olikraus/u8g2/wiki/u8g2reference#drawcircle)
+其他指令請參考 [https://github.com/olikraus/u8g2/wiki/u8g2reference](https://github.com/olikraus/u8g2/wiki/u8g2reference)
 
 
 

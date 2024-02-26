@@ -34,6 +34,8 @@ U8g2
 
 ![oled-lib](assets/u8g2.png)
 
+[u8g2字型列表](https://github.com/olikraus/u8g2/wiki/fntlistallplain)
+
 #### 四、程式說明
 
 ```c {.line-numbers}
