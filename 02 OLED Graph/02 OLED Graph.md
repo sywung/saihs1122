@@ -56,10 +56,10 @@ void drawFrame(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color)
 void drawCircle(uint16_t x0, uint16_t y0, uint16_t r, uint16_t opt);
 void drawDisc(uint16_t x0, uint16_t y0, uint16_t r, uint16_t opt);
 ```
-在本函式中包含了兩種繪製圓形的方式，一種是繪畫圓形外框(drawCircle)，另一種則為填滿圓形(fillCircle)。首先定位圓形的圓心點位為(x0, y0)後，再輸入半徑(r)，即可繪製一圓形。opt是選項，可以是以下各項值：
+在本函式中包含了兩種繪製圓形的方式，一種是繪畫圓形外框(drawCircle)，另一種則為填滿圓形(fillDisc)。首先定位圓形的圓心點位為(x0, y0)後，再輸入半徑(r)，即可繪製一圓形。opt是選項，可以是以下各項值：
 
-- ​	U8G2_DRAW_UPPER_RIGHT → 左上角弧度
-- ​	U8G2_DRAW_UPPER_LEFT → 右上角弧度
+- ​	U8G2_DRAW_UPPER_RIGHT → 右上角弧度
+- ​	U8G2_DRAW_UPPER_LEFT → 左上角弧度
 - ​	U8G2_DRAW_LOWER_LEFT → 左下角幅度
 - ​	U8G2_DRAW_LOWER_RIGHT → 右下角幅度
 - ​	U8G2_DRAW_ALL → 全圓
