@@ -24,7 +24,7 @@ OLED因控制的訊號較多，且內部處理較為複雜，因此在控制OLED
 
 
 
-在電路板接腳方面，因我們是使用I2C通訊的0.96吋(**128x64**) OLED以及Arduino Mega 2560開發板，故在接線的時候需要配合開發板上I2C特定接腳進行連線(**20 (SDA)**, **21 (SCL)**)。電源部分則是採用**3.3V**供電。
+在電路板接腳方面，因我們是使用I2C通訊的0.96/1.3吋(**128x64**) OLED以及Arduino Mega 2560開發板，故在接線的時候需要配合開發板上I2C特定接腳進行連線(**20 (SDA)**, **21 (SCL)**)。電源部分則是採用**3.3V**供電。
 
  
 
@@ -67,7 +67,6 @@ void testdrawstyles(void) {
 void setup() {
   u8g2.begin(); // 使用 OLED了
   testdrawstyles(); // 測試文字
-  delay(1000);
 }
 
 void loop() {}
@@ -88,3 +87,8 @@ void loop() {}
 </center>
 
 4. 請改用按鈕開關完成上題功能。(建議使用程式庫 OneButton)
+
+#### 附錄
+
+###### ESP32 接線圖
+![alt text](assets/image.png)
