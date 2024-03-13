@@ -78,7 +78,7 @@ void loop() {}
 
 1. 請製作一個計時器顯示於OLED，時間變化如下：00:00 > 00:01 >…> 00:59 > 01:00 >…，並於空白處顯示自己的學號，字體大小可自行調整。 (請利用 millis() 完成，勿使用 delay() )
 
-2. 請使用可變電阻及OLED完成一個簡易電壓表，於OLED上顯示目前可變電阻之電壓，字體大小可自行調整。(建議用 sprintf() 及 map() )
+2. 請使用可變電阻及OLED完成一個簡易電壓表，於OLED上顯示目前可變電阻之電壓，字體大小可自行調整。(建議用 [sprintf()](https://programmermagazine.github.io/201401/htm/article2.html) 及 map() )
 
 3. 請將上述功能整合於一個專案中，並且可以使用滑動開關進行功能切換(Func. 1 <-> Func. 2)
 
@@ -86,7 +86,7 @@ void loop() {}
 <img src="assets/image-20240127112420074.png"> <img src="assets/image-20240127112502604.png">
 </center>
 
-4. 請改用按鈕開關完成上題功能。(建議使用程式庫 OneButton)
+4. 請改用按鈕開關完成上題功能。(建議使用程式庫 [OneButton](https://github.com/mathertel/OneButton))
 
 #### 附錄
 
