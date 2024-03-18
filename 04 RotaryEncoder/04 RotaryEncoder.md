@@ -34,24 +34,24 @@
 #### 三、程式說明
 
 ``` c{.line-numbers}
-#define outputA 6 //定義 outputA = 6
-#define outputB 7 //定義 outputB = 7
+#define inputA 6 //定義 inputA = 6
+#define inputB 7 //定義 inputB = 7
 
 int counter = 0; //定義 counter 為 int 類型變數，且初始值為0
 int aState; //定義 aState 為 int 類型變數
 int aLastState; //定義 aLastState 為 int 類型變數
 
 void setup() {
-  pinMode(outputA, INPUT); //埠口模式設定：outputA 設為 輸入
-  pinMode(outputB, INPUT); //埠口模式設定：outputB 設為 輸入
+  pinMode(inputA, INPUT); //埠口模式設定：inputA 設為 輸入
+  pinMode(inputB, INPUT); //埠口模式設定：inputB 設為 輸入
   Serial.begin(9600); //Serial通訊鮑率設為9600
-  aLastState = digitalRead(outputA); //將初始outputA的讀取值 設給 aLastState
+  aLastState = digitalRead(inputA); //將初始outputA的讀取值 設給 aLastState
 }
 
 void loop() {
-  aState = digitalRead(outputA); //將outputA的讀取值 設給 aState
+  aState = digitalRead(inputA); //將 inputA 的讀取值設給 aState
   if (aState != aLastState) { //條件判斷，當aState 不等於 aLastState時發生 
-    if (digitalRead(outputB) != aState) { //條件判斷，當outputB讀取值 不等於 aState時發生
+    if (digitalRead(inputB) != aState) { //條件判斷，當inputB讀取值 不等於 aState時發生
       counter++; //計數器+1
     } else {
       counter--; //計數器-1
@@ -60,14 +60,14 @@ void loop() {
     Serial.print("Position: "); //透過serial印出字串 Position: 
     Serial.println(counter); //透過serial印出 counter 值
     delay(20); //避免系統誤動作
+    aLastState = aState; //將aState 最後的值 設給 aLastState
   }
-
-  aLastState = aState; //將aState 最後的值 設給 aLastState
 }
 
 ```
-
- 可利用程式庫: Ai Esp32 Rotary Encoder
+##### 程式庫
+Arduino: EncoderButton  
+ESP32: Ai Esp32 Rotary Encoder
 
 #### 四、自我練習
 

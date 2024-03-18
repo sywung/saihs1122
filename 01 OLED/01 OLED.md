@@ -24,7 +24,7 @@ OLED因控制的訊號較多，且內部處理較為複雜，因此在控制OLED
 
 
 
-在電路板接腳方面，因我們是使用I2C通訊的0.96吋(**128x64**) OLED以及Arduino Mega 2560開發板，故在接線的時候需要配合開發板上I2C特定接腳進行連線(**20 (SDA)**, **21 (SCL)**)。電源部分則是採用**3.3V**供電。
+在電路板接腳方面，因我們是使用I2C通訊的0.96/1.3吋(**128x64**) OLED以及Arduino Mega 2560開發板，故在接線的時候需要配合開發板上I2C特定接腳進行連線(**20 (SDA)**, **21 (SCL)**)。電源部分則是採用**3.3V**供電。
 
  
 
@@ -67,7 +67,6 @@ void testdrawstyles(void) {
 void setup() {
   u8g2.begin(); // 使用 OLED了
   testdrawstyles(); // 測試文字
-  delay(1000);
 }
 
 void loop() {}
@@ -79,7 +78,7 @@ void loop() {}
 
 1. 請製作一個計時器顯示於OLED，時間變化如下：00:00 > 00:01 >…> 00:59 > 01:00 >…，並於空白處顯示自己的學號，字體大小可自行調整。 (請利用 millis() 完成，勿使用 delay() )
 
-2. 請使用可變電阻及OLED完成一個簡易電壓表，於OLED上顯示目前可變電阻之電壓，字體大小可自行調整。(建議用 sprintf() 及 map() )
+2. 請使用可變電阻及OLED完成一個簡易電壓表，於OLED上顯示目前可變電阻之電壓，字體大小可自行調整。(建議用 [sprintf()](https://programmermagazine.github.io/201401/htm/article2.html) 及 map() )
 
 3. 請將上述功能整合於一個專案中，並且可以使用滑動開關進行功能切換(Func. 1 <-> Func. 2)
 
@@ -87,4 +86,9 @@ void loop() {}
 <img src="assets/image-20240127112420074.png"> <img src="assets/image-20240127112502604.png">
 </center>
 
-4. 請改用按鈕開關完成上題功能。(建議使用程式庫 OneButton)
+4. 請改用按鈕開關完成上題功能。(建議使用程式庫 [OneButton](https://github.com/mathertel/OneButton))
+
+#### 附錄
+
+###### ESP32 接線圖
+![alt text](assets/image.png)
