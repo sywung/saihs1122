@@ -90,6 +90,18 @@ void loop() {
 }
 ```
 
+##### Json 解析
+請利安裝 ArduinoJson 程式庫, 參考下列程式片段取得 json 內資料。
+
+``` c
+DynamicJsonDocument dhtJson(payload.length()*2);
+deserializeJson(dhtJson, payload);
+    
+int t = dhtJson["temperature"];
+int h = dhtJson["humidity"];
+
+```
+
 
 #### 四、自我練習
 

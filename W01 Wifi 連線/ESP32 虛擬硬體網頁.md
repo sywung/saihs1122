@@ -11,7 +11,7 @@
 
 #### 二、下載及安裝
 
-以瀏覽器開啟 https://github.com/sywung/saihs1122/。開啟紅色連結，並下載 esp32.exe(可能會被誤判成病毒) 及 web.bat。
+以瀏覽器開啟 https://github.com/sywung/saihs1122/  。開啟紅色連結，並下載 esp32.exe(可能會被誤判成病毒) 及 web.bat。
 <center>
 <img src="assets/image-20240415135331868.png" alt="image" width="auto" height="360">
 <img src="assets/image-20240415140403031.png" alt="image" width="auto" height="360">
