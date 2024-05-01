@@ -90,6 +90,22 @@ void loop() {
 }
 ```
 
+##### 連線到網頁
+```
+  Serial.println("http connecting...");
+  HTTPClient http;
+  http.begin("http://192.168.x.x:8032/api/dht");
+
+  int httpcode = http.GET();
+
+  if (httpcode == HTTP_CODE_OK) {
+    String payload = http.getString();
+    Serial.println(payload);
+  }
+
+  http.end();
+```
+
 ##### Json 解析
 請利安裝 ArduinoJson 程式庫, 參考下列程式片段取得 json 內資料。
 
