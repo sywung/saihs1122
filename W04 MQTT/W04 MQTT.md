@@ -197,4 +197,8 @@ https://hackmd.io/@richardychen/IoT_wk15mqtt
 
 #### 自我練習
 
+<<<<<<< HEAD
 請將 DHT11 量測到的溫濕度值送至 MQTT 指定的 Topic，並用 MQTT 電腦端控制 esp32 上的 LED 。
+=======
+請利 mqtt 電腦端控制 esp32 上的 LED 。
+>>>>>>> c98512979a50c8e97c5ea909c5a47bbe95631735
