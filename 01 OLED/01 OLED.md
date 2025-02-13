@@ -60,6 +60,7 @@ void testdrawstyles(void) {
     // char buf[10]; 
     // sprintf(buf,"%s","SAIHS");
     // u8g2.print(buf);
+    // printf("%d - %f * %x\n", 16, 3.14, 16); ==> 16 - 3.14 * 10 
   } while (u8g2.nextPage());
   delay(1000);
 }
