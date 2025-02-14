@@ -93,3 +93,19 @@ void loop() {}
 
 ###### ESP32 接線圖
 ![alt text](assets/image.png)
+
+###### 利用 millis() 計算1秒
+``` C
+unsigned long previousMillis = 0; // 記錄上次時間
+const long interval = 1000;       // 1 秒
+
+...
+    // 這樣的寫法，即使溢位也能正確計算
+    if (( millis() - previousMillis) >= interval) {
+        previousMillis += interval ;  // 更新時間
+        // 這裡就可以放每一秒要執行的程式
+    }
+...
+
+```
+這種方法不會阻塞主程式，因此可以讓其他程式碼繼續執行，比如讀取感測器、處理網路請求等。
