@@ -29,7 +29,7 @@
 
 [參考資料](https://howtomechatronics.com/tutorials/arduino/rotary-encoder-works-use-arduino/)
 
- 
+測過目前的編碼器，要將 A B 視為2個相位差 90 度的按鈕開關，而非滑動開關。
 
 #### 三、程式說明
 
