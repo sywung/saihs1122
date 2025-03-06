@@ -77,4 +77,7 @@ ESP32: Ai Esp32 Rotary Encoder
 
 2. 請使用蜂鳴器、按鍵與旋轉編碼器，當旋轉編碼器順時鐘旋轉則會將蜂鳴器的頻率往上調(+50Hz)；逆時針旋轉則會往下調(-50Hz)，按下按鍵後則會關閉蜂鳴器發聲，再按一下則會繼續發聲。系統重置後預設為400Hz不發聲。
 
- 
+ #### 參考資料
+https://www.dynapar.com/knowledge/encoder_issues/encoder_jitter/
+ ![圖片](https://github.com/user-attachments/assets/bb1fa5d6-0b38-42fd-9fef-d0357630af60)
+
