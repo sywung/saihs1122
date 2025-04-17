@@ -97,6 +97,8 @@ void clear()
 
 或是利用 GIMP 將 png 轉存成 xbm 也可以。可參考影片:https://www.youtube.com/watch?v=ac5CYQ3OJ7c&list=PLO2D4fDkIZCVG0tF_QvZqrIN6djy4-Z6i&index=3
 
+或是在本庫中 Release 中，下載 goxbm 執行。 用網頁連接到 localhost:8080，就可以上傳圖像獲得 xbm 資料了。
+
 #### 四、自我練習
 
 1. 請試著於 OLED 上利用上述指令繪製一個圖形，該圖形如下：
