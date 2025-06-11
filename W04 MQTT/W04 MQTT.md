@@ -197,4 +197,13 @@ https://hackmd.io/@richardychen/IoT_wk15mqtt
 
 #### 自我練習
 
-請將 DHT11 量測到的溫濕度值送至 MQTT 指定的 Topic，並用 MQTT 電腦端控制 esp32 上的 LED 。
+請將 DHT11 量測到的溫濕度值送至 MQTT 指定的 Topic，並用 MQTT 電腦端控制 esp32 上的 WS2812 。
+``` C
+//Example 1: set color from red, green, and blue components individually
+  leds[i].red =    50;
+  leds[i].green = 100;
+  leds[i].blue =  150;
+
+//Example 2: set color from red, green, and blue components all at once
+  leds[i] = CRGB( 50, 100, 150);
+```
