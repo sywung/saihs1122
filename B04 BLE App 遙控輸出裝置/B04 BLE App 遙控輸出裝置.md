@@ -146,7 +146,8 @@ void loop() {
 2. 加入 **按鈕事件**（`CMD_BUTTON`），短按讓伺服馬達回到 90°（中間位置）
 
 ``` c
-// 提示：在 onBlePacketReceived 中加入判斷
+// 提示：App 只送 ACT_SHORT（按下）/ ACT_RELEASE（放開）
+// 在按下瞬間觸發回中即可
 if (packet->command == CMD_BUTTON && packet->action == ACT_SHORT) {
   myServo.write(90);
   Serial.println("伺服馬達回中！");

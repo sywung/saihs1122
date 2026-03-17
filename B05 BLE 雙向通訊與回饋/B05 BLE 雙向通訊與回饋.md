@@ -47,8 +47,8 @@
 
 | 函式 | 說明 |
 |------|------|
-| `sendHapticFeedback(pattern)` | 發送振動回饋給 App |
-| `sendSoundFeedback(soundId)` | 發送音效回饋給 App |
+| `sendHapticFeedback(pattern, intensity)` | 發送振動回饋給 App；`intensity` 為強度（0~255），省略時使用最強（255）|
+| `sendSoundFeedback(soundId, volume)` | 發送音效回饋給 App；`volume` 為音量（0~255），省略時使用最大聲（255）|
 | `sendCombinedFeedback(pattern, soundId)` | 同時發送振動＋音效 |
 
 
@@ -81,16 +81,30 @@ void onBleConnection(bool connected) {
   }
 }
 
+// 按鈕手勢判斷（App 只送 ACT_SHORT 按下 / ACT_RELEASE 放開）
+const unsigned long LONG_PRESS_MS = 800;
+bool btnPressed   = false;
+unsigned long pressStart = 0;
+
 void onBlePacketReceived(const BcbpPacketV1* packet) {
-  // 接收 App 傳來的按鈕：短按測試振動，長按測試音效
-  if (packet->command == CMD_BUTTON) {
-    if (packet->action == ACT_SHORT) {
-      Serial.println("測試振動回饋");
-      BleManager::getInstance().sendHapticFeedback(HAPTIC_DOUBLE);
-    }
-    if (packet->action == ACT_LONG) {
-      Serial.println("測試音效回饋");
+  if (packet->command != CMD_BUTTON) return;
+
+  if (packet->action == ACT_SHORT) {
+    // 按下：記錄時間
+    pressStart = millis();
+    btnPressed = true;
+
+  } else if (packet->action == ACT_RELEASE && btnPressed) {
+    // 放開：判斷是短按或長按
+    btnPressed = false;
+    unsigned long dur = millis() - pressStart;
+
+    if (dur >= LONG_PRESS_MS) {
+      Serial.println("長按：測試音效回饋");
       BleManager::getInstance().sendSoundFeedback(SOUND_ALERT);
+    } else {
+      Serial.println("短按：測試振動回饋");
+      BleManager::getInstance().sendHapticFeedback(HAPTIC_DOUBLE);
     }
   }
 }

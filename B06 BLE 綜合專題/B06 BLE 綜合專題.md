@@ -259,4 +259,4 @@ void loop() {
 
 2. 距離 < 20cm 時在 OLED 顯示警告符號 `!!!`，並傳送 `HAPTIC_ERROR` 給 App
 
-3. 加入 App 按鈕功能：短按切換 PIR 警報開/關，OLED 顯示目前狀態
+3. 加入 App 按鈕功能：短按（`ACT_SHORT`）切換 PIR 警報開/關，OLED 顯示目前狀態（App 只送 `ACT_SHORT` 與 `ACT_RELEASE`，在按下瞬間切換即可）
