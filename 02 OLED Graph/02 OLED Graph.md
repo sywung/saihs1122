@@ -6,9 +6,12 @@
 
 #### 一、繪圖簡介
 
-<center>
-<img src="assets/clip_image001.jpg" alt="image" width="auto" height="300"><img src="assets/clip_image002.jpg" alt="image" width="auto" height="300">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image001.jpg" alt="image" width="auto" height="300"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image002.jpg" alt="image" width="auto" height="300"></td>
+  </tr></table></div>
 
 
 我們於前一節已經介紹了如何控制OLED輸出文字，並且還可以做出相關應用功能，但想想是否還缺少些甚麼？既然有了顯示器，何不能顯示圖形呢！人類在觀看文字與圖像時，更能夠在第一時間了解圖像所代表的涵義。走在馬路上處處都可以見到各種不同樣式的顯示招牌或螢幕，可見圖像於我們日常生活中有多重要了。
@@ -48,7 +51,11 @@ void drawFrame(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color)
 ```
 在本函式中包含了兩種繪製長方形的方式，一種是繪畫長方形外框(drawFrame)，另一種則為實心長方形(drawBox)。首先定位長方形左上角為(x0, y0)後，再輸入寬度(w)與高度(h)，即可繪製一長方形，如圖所示。
 
+<div align="center">
+ 
 ![lcds___displays_rect.png](assets/clip_image004.png)
+
+</div>
 
 (四) 繪製圓形
 
@@ -89,8 +96,11 @@ void clear()
 
 首先可於電腦內小畫家中開啟一空白畫布，接著設定其長寬為OLED的大小，例如(128*64)後即可開始作畫。在 小畫家/檔案/內容 做設定即可。
 
+<div align="center">
+ 
 ![image](assets/image.png)
 
+</div>
 可透過線上的 png 轉 xbm 的網站，轉成 U8g2 可用的資料。下載來的檔案，只要將副檔名改為 xbm -> txt, 即可看到文字的內容，將所要的部分複製到程式碼中即可。 
 
 ![img](assets/xbm.png)
@@ -102,7 +112,9 @@ void clear()
 #### 四、自我練習
 
 1. 請試著於 OLED 上利用上述指令繪製一個圖形，該圖形如下：
-
+<div align="center">
+ 
 ![image-20240127120406121](assets/image-20240127120406121.png)
 
+</div>
 2. 請小畫家中隨意繪畫一個圖形，並且將該圖形顯示於OLED(請加上學號或姓名)
