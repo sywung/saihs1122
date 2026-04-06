@@ -5,9 +5,19 @@
 <div style="text-align: right">班級：______________ 座號：________姓名：________________</div>
 
 #### 一、OLED
-<center>
-<img src="assets/oled1.jpg" alt="image" width="auto" height="240"><img src="assets/oled2.jpeg" alt="image" width="auto" height="240"><img src="assets/oled3.jpeg" alt="image" width="auto" height="240">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 30%; border: none; padding: 5px;">
+      <img src="assets/oled1.jpg" alt="image" width="auto" height="240">
+    </td>
+    <td style="width: 30%; border: none; padding: 5px;">
+      <img src="assets/oled2.jpeg" alt="image" width="auto" height="240">
+    </td>
+    <td style="width: 30%; border: none; padding: 5px;">
+     <img src="assets/oled3.jpeg" alt="image" width="auto" height="240">
+    </td></tr></table>
+</div>
 有機發光二極體（英語：Organic Light-Emitting Diode，縮寫：OLED），具有自發光性、廣視角、高對比、低耗電、高反應速率、全彩化及製程簡單等優點，但於大面板價格、技術選擇性 、壽命、解析度、色彩還原方面則比不上TFT-LCD（薄膜電晶體液晶顯示器）顯示器。
 
  
@@ -16,9 +26,11 @@
 
 OLED因控制的訊號較多，且內部處理較為複雜，因此在控制OLED時會透過模組內IC進行通訊，如下圖所示。而通訊的方式主流來說有兩種，分別是I2C與SPI。
 
+<div align="center">
+ 
 ![image-20240127111219900](assets/image-20240127111219900.png)
 
-
+</div>
 
 ![https://www.digikey.be/maker-media/98f1d94e-d1a0-403f-9afd-baecd0e8afb2](assets/98f1d94e-d1a0-403f-9afd-baecd0e8afb2.jpeg)
 
@@ -83,16 +95,27 @@ void loop() {}
 
 3. 請將上述功能整合於一個專案中，並且可以使用滑動開關進行功能切換(Func. 1 <-> Func. 2)
 
-<center>
-<img src="assets/image-20240127112420074.png"> <img src="assets/image-20240127112502604.png">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 50%; border: none; padding: 5px;">
+<img src="assets/image-20240127112420074.png">
+    </td>
+   <td style="width: 50%; border: none; padding: 5px;">
+   <img src="assets/image-20240127112502604.png">
+   </td></tr></table>
+</div>
 
 4. 請改用按鈕開關完成上題功能。(建議使用程式庫 [OneButton](https://github.com/mathertel/OneButton))
 
 #### 附錄
 
 ###### ESP32 接線圖
+<div align="center">
+ 
 ![alt text](assets/image.png)
+
+</div>
 
 ###### 利用 millis() 計算1秒
 ``` C
