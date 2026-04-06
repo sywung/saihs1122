@@ -5,11 +5,13 @@
 <div style="text-align: right">班級：______________ 座號：________姓名：________________</div>
 
 #### 一、Joystick
-<center>
-<img src="assets/clip_image001.jpg" alt="image" width="auto" height="300"></br>
-<img src="assets/clip_image002.jpg" alt="image" width="auto" height="240">
-<img src="assets/clip_image004.png" alt="image" width="auto" height="240">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image001.jpg" alt="image" width="auto" height="300"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image002.jpg" alt="image" width="auto" height="240"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image004.png" alt="image" width="auto" height="240"></td>
+  </tr></table></div>
 
 搖桿（英語：Joystick）是一種輸入設備，由基座和固定在上面作為樞軸的主搖桿組成，作用是向其控制的設備傳遞角度或方向信號。現時搖桿主要用來操縱電子遊戲，通常有一個或多個按鈕，按鈕的狀態也可被電腦識別。(From wikipedia)
 
@@ -17,18 +19,21 @@
 
 #### 二、使用方式
 
-<center>
-<img src="assets/clip_image005.jpg" alt="image" width="auto" height="auto">
-<img src="assets/clip_image006.jpg" alt="image" width="auto" height="auto">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image005.jpg" alt="image" width="auto" height="auto"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image006.jpg" alt="image" width="auto" height="auto"></td>
+  </tr></table></div>
 
 搖桿上的感測有兩個部分，首先是X-Y方向的轉動，這兩方向會有個一個可變電阻作為分壓調整，分壓出來的訊號即為X或Y軸方向的轉動大小；其次為搖桿按下的按鍵，此案件藏於搖桿下方，按鍵的使用方式和一般的按鈕開關一樣。
 
- 
+
+<div align="center">
 
 ![](assets/image-20240219110904839.png)
 
- 
+</div>
 
 在模組接腳方面一共有五支腳位需要接上，分別是GND、+5V、VRx、Vry、SW。電源請使用5V並接至+5V與GND腳位。VRx與VRy為X與Y軸的訊號輸出，該輸出為類比訊號，可以接至Arduino的類比輸入接腳(A0, A1等)。SW則是搖桿按鈕接腳，此為數位訊號施出，因此可以接至Arduino的數位訊號腳位。
 
@@ -72,9 +77,11 @@ void loop() {
 
 2. 請使用5個LED表示目前搖桿的移動狀態(請依下圖方式排列)，搖桿向上移動時，上方LED點亮，右方下方與左方移動時也會點亮對應的LED。按鈕按下時，會點亮中央的LED。(提示可用if else判斷)
 
+<div align="center">
+ 
 ![image-20240127121936470](assets/image-20240127121936470.png)
 
- 
+</div>
 
 3. 請使用單軸控制2個LED的亮暗程度，以X軸為例，當搖桿撥向右側，右方LED會為最亮，輕輕撥向右側則次亮；反之撥向左側則左方LED最亮。2個LED輕輕撥向左側則次亮。搖桿回到中間時，則2個LED不亮。(需使用analogWrite PWM控制)
 
