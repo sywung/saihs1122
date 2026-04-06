@@ -6,9 +6,13 @@
 
 #### 一、Rotary Encoder
 
-<center>
-<img src="assets/clip_image001.png" alt="image" width="auto" height="260"> <img src="assets/clip_image003.png" alt="image" width="auto" height="260"> <img src="assets/clip_image004.jpg" alt="image" width="auto" height="260">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image001.png" alt="image" width="auto" height="260"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image003.png" alt="image" width="auto" height="260"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image004.jpg" alt="image" width="auto" height="260"></td>
+  </tr></table></div>
 
 
 
@@ -23,9 +27,13 @@
 
 ##### 二、使用方式
 
-<center>
-<img src="assets/clip_image010.jpg" alt="image" width="auto" height="260"> <img src="assets/clip_image011.png" alt="image" width="auto" height="260">
-</center>
+<div align="center">
+<table style="width: 100%; border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image010.jpg" alt="image" width="auto" height="260"></td>
+    <td style="width: 30%; border: none; padding: 5px;"><img src="assets/clip_image011.png" alt="image" width="auto" height="260"></td>
+  </tr></table></div>
+
 
 [參考資料](https://howtomechatronics.com/tutorials/arduino/rotary-encoder-works-use-arduino/)
 
@@ -79,5 +87,10 @@ ESP32: Ai Esp32 Rotary Encoder
 
  #### 參考資料
 https://www.dynapar.com/knowledge/encoder_issues/encoder_jitter/
+
+<div align="center">
+ 
  ![圖片](https://github.com/user-attachments/assets/bb1fa5d6-0b38-42fd-9fef-d0357630af60)
+
+</div>
 
