@@ -498,12 +498,23 @@
         fetch("/api/dht")
           .then(r => r.json())
           .then(data => {
-            $("#tempValue").val(data.temperature);
-            $("#humidityValue").val(data.humidity);
+            // 不覆蓋正在編輯中的欄位，其餘一律更新（含 ESP32 推送資料）
+            var active = document.activeElement;
+            if (active !== document.getElementById("tempValue"))
+              $("#tempValue").val(data.temperature);
+            if (active !== document.getElementById("humidityValue"))
+              $("#humidityValue").val(data.humidity);
             updateGauges(data.temperature, data.humidity);
           })
           .catch(err => console.error("DHT fetch error:", err));
       }
+
+      // 輸入框即時驅動儀表
+      $("#tempValue, #humidityValue").on("input", function () {
+        var t = parseFloat($("#tempValue").val());
+        var h = parseFloat($("#humidityValue").val());
+        if (!isNaN(t) && !isNaN(h)) updateGauges(t, h);
+      });
 
       // 初始化儀表預設值，並開始輪詢
       updateGauges(20, 50);
@@ -511,30 +522,37 @@
       setInterval(fetchDHTAndUpdate, 2000);
 
       // ── DHT ──
-      function updateDHTData() {
-        var manualInput = $("#manualInput").prop("checked");
-
-        if (!manualInput) {
-          var randomTemp = Math.floor(Math.random() * 51) - 10;
-          var randomHumidity = Math.floor(Math.random() * 51) + 40;
-          $("#tempValue").val(randomTemp);
-          $("#humidityValue").val(randomHumidity);
-        }
-
-        var data = {
-          temperature: parseFloat($("#tempValue").val()),
-          humidity: parseFloat($("#humidityValue").val()),
-        };
-
+      // Toggle OFF = 亂數自動送（每 5 秒）
+      // Toggle ON  = 手動模式，離開欄位（blur）才送
+      function postDHTData(temp, humidity) {
         $.ajax({
           type: "POST",
           url: "/api/dht",
           contentType: "application/json;charset=UTF-8",
-          data: JSON.stringify(data),
+          data: JSON.stringify({ temperature: temp, humidity: humidity }),
           success: function (response) { console.log(response); },
           error: function (error) { console.error(error); },
         });
       }
+
+      function updateDHTData() {
+        if ($("#manualInput").prop("checked")) return; // 手動模式由 blur 負責
+        var t = Math.floor(Math.random() * 51) - 10;
+        var h = Math.floor(Math.random() * 51) + 40;
+        $("#tempValue").val(t);
+        $("#humidityValue").val(h);
+        postDHTData(t, h);
+      }
+
+      // 手動模式：離開欄位或按 Enter 才送出
+      $("#tempValue, #humidityValue").on("blur keydown", function (e) {
+        if (e.type === "keydown" && e.key !== "Enter") return;
+        if (!$("#manualInput").prop("checked")) return;
+        postDHTData(
+          parseFloat($("#tempValue").val()),
+          parseFloat($("#humidityValue").val())
+        );
+      });
 
       updateDHTData();
       setInterval(updateDHTData, 5000);
