@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESP32 Monitor</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --surface: #1a1d27;
+        --surface-2: #252836;
+        --border: #2d3142;
+        --accent: #4f8ef7;
+        --accent-dim: rgba(79, 142, 247, 0.12);
+        --text: #e8eaf0;
+        --text-muted: #8b90a0;
+        --green: #4caf82;
+        --yellow: #f5c842;
+      }
+
+      :root.light {
+        --bg: #f4f5f7;
+        --surface: #ffffff;
+        --surface-2: #eef0f4;
+        --border: #d8dce6;
+        --accent: #3b7de9;
+        --accent-dim: rgba(59, 125, 233, 0.10);
+        --text: #1a1d27;
+        --text-muted: #6b7280;
+        --green: #2d9e6b;
+        --yellow: #c9990a;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        min-height: 100vh;
+        padding: 1.5rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* ── Header ── */
+      header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+
+      .pulse-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--green);
+        border-radius: 50%;
+        flex-shrink: 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 130, 0.5); }
+        50%       { box-shadow: 0 0 0 7px rgba(76, 175, 130, 0); }
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .url-badge {
+        margin-left: auto;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        background: var(--surface-2);
+        padding: 0.3rem 0.75rem;
+        border-radius: 6px;
+        font-family: monospace;
+        border: 1px solid var(--border);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 260px;
+      }
+
+      /* ── Cards ── */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.1rem 1.25rem;
+      }
+
+      .card-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 0.45rem;
+      }
+
+      .card-value {
+        font-size: 0.95rem;
+        color: var(--text);
+        line-height: 1.6;
+        word-break: break-all;
+      }
+
+      /* ── Manual Input ── */
+      .manual-section {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.1rem 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .manual-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        user-select: none;
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 38px;
+        height: 21px;
+        flex-shrink: 0;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+      }
+
+      .toggle-slider::before {
+        content: '';
+        position: absolute;
+        left: 3px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 13px;
+        height: 13px;
+        background: var(--text-muted);
+        border-radius: 50%;
+        transition: left 0.2s, background 0.2s;
+      }
+
+      .toggle-switch input:checked + .toggle-slider {
+        background: var(--accent-dim);
+        border-color: var(--accent);
+      }
+
+      .toggle-switch input:checked + .toggle-slider::before {
+        left: calc(100% - 16px);
+        background: var(--accent);
+      }
+
+      .toggle-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .input-group label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      .input-group input {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        padding: 0.45rem 0.7rem;
+        font-size: 0.95rem;
+        width: 110px;
+        outline: none;
+        transition: border-color 0.15s;
+        -moz-appearance: textfield;
+      }
+
+      .input-group input:focus {
+        border-color: var(--accent);
+      }
+
+      .input-group input::-webkit-inner-spin-button,
+      .input-group input::-webkit-outer-spin-button {
+        opacity: 1;
+      }
+
+      /* ── Canvas ── */
+      .canvas-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+      }
+
+      .canvas-title {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 1.25rem;
+      }
+
+      canvas {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: block;
+        max-width: 100%;
+        background: var(--surface-2);
+      }
+
+      /* ── Gauges ── */
+      .gauge-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        justify-content: center;
+      }
+
+      .gauge-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .gauge-svg { width: 110px; }
+
+      .gauge-arc-fill {
+        transition: stroke-dashoffset 0.6s ease;
+      }
+
+      .gauge-item-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      /* ── Side-by-side layout ── */
+      .side-by-side {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .side-by-side .manual-section {
+        flex: 1;
+        margin-bottom: 0;
+      }
+
+      .side-by-side .canvas-section {
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 640px) {
+        .side-by-side {
+          flex-direction: column;
+        }
+        .side-by-side .canvas-section {
+          width: 100%;
+        }
+      }
+
+      /* ── Theme Toggle Button ── */
+      .theme-btn {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text-muted);
+        padding: 0.35rem 0.75rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .theme-btn:hover {
+        border-color: var(--accent);
+        color: var(--text);
+      }
+
+      .theme-btn svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+
+      /* hide the icon not in use */
+      :root:not(.light) .icon-sun { display: none; }
+      :root.light .icon-moon { display: none; }
+
+      /* ── Responsive ── */
+      @media (max-width: 480px) {
+        body { padding: 1rem; }
+        h1 { font-size: 1.2rem; }
+        .url-badge { max-width: 160px; }
+        canvas { width: 260px; height: 260px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="pulse-dot"></div>
+      <h1>ESP32 Monitor</h1>
+      <button class="theme-btn" id="themeToggle" aria-label="切換主題">
+        <!-- moon icon (shown in dark mode) -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <!-- sun icon (shown in light mode) -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <span id="themeLabel">Light</span>
+      </button>
+      <span class="url-badge" id="ip">{{.URL}}</span>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-label">DHT 感測器</div>
+        <div class="card-value">{{ .DHT | uHTML }}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">單一 LED</div>
+        <div class="card-value">{{ .LED | uHTML }}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Ring LED</div>
+        <div class="card-value">{{ .ringLED | uHTML }}</div>
+      </div>
+    </div>
+
+    <div class="side-by-side">
+    <div class="manual-section">
+      <label class="manual-toggle">
+        <div class="toggle-switch">
+          <input type="checkbox" id="manualInput" />
+          <span class="toggle-slider"></span>
+        </div>
+        <span class="toggle-label">手動設定溫濕度</span>
+      </label>
+      <div class="input-row">
+        <div class="input-group">
+          <label for="tempValue">溫度 (°C)</label>
+          <input type="number" id="tempValue" min="-10" max="40" value="20" />
+        </div>
+        <div class="input-group">
+          <label for="humidityValue">濕度 (%)</label>
+          <input type="number" id="humidityValue" min="40" max="90" value="50" />
+        </div>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge-item">
+          <svg class="gauge-svg" viewBox="0 0 100 65">
+            <defs>
+              <linearGradient id="tempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#4f8ef7"/>
+                <stop offset="50%"  stop-color="#f5c842"/>
+                <stop offset="100%" stop-color="#f26b5b"/>
+              </linearGradient>
+            </defs>
+            <path d="M 10,55 A 40,40 0 0,1 90,55" fill="none" stroke="var(--border)" stroke-width="8" stroke-linecap="round"/>
+            <path id="tempArc" class="gauge-arc-fill" d="M 10,55 A 40,40 0 0,1 90,55" fill="none" stroke="url(#tempGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+            <text id="tempText" x="50" y="50" text-anchor="middle" font-size="16" font-weight="700" fill="var(--text)">--</text>
+            <text x="50" y="60" text-anchor="middle" font-size="8" fill="var(--text-muted)">°C</text>
+            <text x="10" y="64" text-anchor="middle" font-size="7" fill="var(--text-muted)">-10</text>
+            <text x="90" y="64" text-anchor="middle" font-size="7" fill="var(--text-muted)">40</text>
+          </svg>
+          <div class="gauge-item-label">溫度</div>
+        </div>
+        <div class="gauge-item">
+          <svg class="gauge-svg" viewBox="0 0 100 65">
+            <defs>
+              <linearGradient id="humidGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#f5c842"/>
+                <stop offset="100%" stop-color="#4f8ef7"/>
+              </linearGradient>
+            </defs>
+            <path d="M 10,55 A 40,40 0 0,1 90,55" fill="none" stroke="var(--border)" stroke-width="8" stroke-linecap="round"/>
+            <path id="humidArc" class="gauge-arc-fill" d="M 10,55 A 40,40 0 0,1 90,55" fill="none" stroke="url(#humidGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+            <text id="humidText" x="50" y="50" text-anchor="middle" font-size="16" font-weight="700" fill="var(--text)">--</text>
+            <text x="50" y="60" text-anchor="middle" font-size="8" fill="var(--text-muted)">%</text>
+            <text x="10" y="64" text-anchor="middle" font-size="7" fill="var(--text-muted)">40</text>
+            <text x="90" y="64" text-anchor="middle" font-size="7" fill="var(--text-muted)">90</text>
+          </svg>
+          <div class="gauge-item-label">濕度</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">Ring LED 狀態</div>
+      <canvas id="adLightsCanvas" width="300" height="300"></canvas>
+    </div>
+    </div><!-- end side-by-side -->
+
+    <script>
+      // ── Theme ──
+      const root = document.documentElement;
+      const themeBtn = document.getElementById("themeToggle");
+      const themeLabel = document.getElementById("themeLabel");
+
+      function applyTheme(isLight) {
+        root.classList.toggle("light", isLight);
+        themeLabel.textContent = isLight ? "Dark" : "Light";
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+      }
+
+      // restore saved preference
+      applyTheme(localStorage.getItem("theme") === "light");
+
+      themeBtn.addEventListener("click", () => {
+        applyTheme(!root.classList.contains("light"));
+      });
+
+      // ── Gauges ──
+      const GAUGE_ARC = 125.66; // π × 40
+
+      function updateGauges(temp, humidity) {
+        const tempRatio  = Math.min(1, Math.max(0, (temp + 10) / 50));
+        const humidRatio = Math.min(1, Math.max(0, (humidity - 40) / 50));
+        document.getElementById("tempArc").style.strokeDashoffset  = GAUGE_ARC * (1 - tempRatio);
+        document.getElementById("humidArc").style.strokeDashoffset = GAUGE_ARC * (1 - humidRatio);
+        document.getElementById("tempText").textContent  = temp.toFixed(1);
+        document.getElementById("humidText").textContent = humidity.toFixed(0);
+      }
+
+      function fetchDHTAndUpdate() {
+        fetch("/api/dht")
+          .then(r => r.json())
+          .then(data => {
+            $("#tempValue").val(data.temperature);
+            $("#humidityValue").val(data.humidity);
+            updateGauges(data.temperature, data.humidity);
+          })
+          .catch(err => console.error("DHT fetch error:", err));
+      }
+
+      // 初始化儀表預設值，並開始輪詢
+      updateGauges(20, 50);
+      fetchDHTAndUpdate();
+      setInterval(fetchDHTAndUpdate, 2000);
+
+      // ── DHT ──
+      function updateDHTData() {
+        var manualInput = $("#manualInput").prop("checked");
+
+        if (!manualInput) {
+          var randomTemp = Math.floor(Math.random() * 51) - 10;
+          var randomHumidity = Math.floor(Math.random() * 51) + 40;
+          $("#tempValue").val(randomTemp);
+          $("#humidityValue").val(randomHumidity);
+        }
+
+        var data = {
+          temperature: parseFloat($("#tempValue").val()),
+          humidity: parseFloat($("#humidityValue").val()),
+        };
+
+        $.ajax({
+          type: "POST",
+          url: "/api/dht",
+          contentType: "application/json;charset=UTF-8",
+          data: JSON.stringify(data),
+          success: function (response) { console.log(response); },
+          error: function (error) { console.error(error); },
+        });
+      }
+
+      updateDHTData();
+      setInterval(updateDHTData, 5000);
+
+      const canvas = document.getElementById("adLightsCanvas");
+      const context = canvas.getContext("2d");
+
+      const colors = Array.from({ length: 16 }, () => ({ red: 0, green: 0, blue: 0 }));
+      const numLights = 16;
+      const radius = 100;
+      const angleIncrement = (2 * Math.PI) / numLights;
+
+      function drawAdLights() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < numLights; i++) {
+          const angle = i * angleIncrement;
+          const x = canvas.width / 2 - radius * Math.sin(angle + Math.PI);
+          const y = canvas.height / 2 + radius * Math.cos(angle + Math.PI);
+          const color = colors[i % colors.length];
+
+          context.beginPath();
+          context.arc(x, y, 15, 0, 2 * Math.PI);
+          context.fillStyle = `rgb(${color.red}, ${color.green}, ${color.blue})`;
+          context.fill();
+          context.strokeStyle = "#2d3142";
+          context.lineWidth = 1.5;
+          context.stroke();
+        }
+      }
+
+      function fetchDataAndDraw() {
+        fetch("/api/ring-led")
+          .then(r => r.json())
+          .then(data => {
+            for (let i = 0; i < numLights; i++) {
+              colors[i] = data.color[i];
+            }
+            drawAdLights();
+          })
+          .catch(err => console.error("Error fetching data:", err));
+      }
+
+      setInterval(fetchDataAndDraw, 500);
+      drawAdLights();
+    </script>
+  </body>
+</html>
